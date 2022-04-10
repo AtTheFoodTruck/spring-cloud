@@ -24,6 +24,7 @@ spring:
 #              preLogger: true
 #              postLogger: true
       routes:
+        # User Service 시작
         # 로그인, 회원가입, 중복체크
         - id: user-service
           uri: lb://USER-SERVICE
@@ -34,17 +35,6 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         # user-service의 모든 요청 filter처리
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/users/**
-            - Method=GET,PATCH,DELETE,POST
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-            - name: JwtAuthentication
-              args:
-                roles: ROLE_USER
         # 회원정보 수정, 회원정보 삭제
         - id: user-service
           uri: lb://USER-SERVICE
@@ -56,7 +46,15 @@ spring:
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
             - name: JwtAuthentication
               args:
-                roles: ROLE_USER,ROLE_MANAGER
+                roles: ROLE_USER, ROLE_MANAGER
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/users/logout
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         # 매니저 서비스
         - id: user-service
           uri: lb://USER-SERVICE
@@ -69,6 +67,38 @@ spring:
             - name: JwtAuthentication
               args:
                 roles: ROLE_MANAGER
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/users/**
+            - Method=GET,PATCH,DELETE,POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - name: JwtAuthentication
+              args:
+                roles: ROLE_USER
+        # User Service 끝
+        # Item Service 시작
+        - id: item-service
+          uri: lb://ITEM-SERVICE
+          predicates:
+            - Path=/item-service/items/v1/stores/**, /item-service/items/v1/item/**
+            - Method=GET,PATCH,DELETE,POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/item-service/(?<segment>.*), /$\{segment}
+            - name: JwtAuthentication
+              args:
+                roles: ROLE_MANAGER
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/swagger-ui/, /v2/api-docs, /configuration/**, /swagger*/**, /webjars/**
+#            - Method=GET
+#          filters:
+#            - RemoveRequestHeader=Cookie
+##            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         # config 서비스
 #        - id: user-service
 #          uri: lb://USER-SERVICE
