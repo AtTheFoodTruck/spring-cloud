@@ -91,6 +91,18 @@ spring:
             - name: JwtAuthentication
               args:
                 roles: ROLE_MANAGER
+        # Order Service 시작
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order-service/orders/v1/customer/**
+            - Method=GET,PATCH,DELETE,POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/order-service/(?<segment>.*), /$\{segment}
+            - name: JwtAuthentication
+              args:
+                roles: ROLE_USER
 #        - id: user-service
 #          uri: lb://USER-SERVICE
 #          predicates:
