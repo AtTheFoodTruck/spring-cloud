@@ -16,6 +16,21 @@ spring:
     name: apigateway-service
   cloud:
     gateway:
+      # cors 설정
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000" # SCG를 호출하는 web Client 주
+            allowedMethods: # SCG에서 허용하는 methods
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTIONS
+              - DELETE
+              - PATCH
+            allowedHeaders: '*' # SCG에서 허용하는 Headers
+            allow-credentials: true
 #      default-filters:
 #        filters:
 #          - name: LoggingFilter
