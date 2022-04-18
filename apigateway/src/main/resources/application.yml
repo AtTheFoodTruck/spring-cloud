@@ -20,7 +20,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: http://localhost:3000 # SCG를 호출하는 web Client 주
+            allowedOrigins: "http://localhost:3000" # SCG를 호출하는 web Client 주
             allowedMethods: # SCG에서 허용하는 methods
               - GET
               - POST
