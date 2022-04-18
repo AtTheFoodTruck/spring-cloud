@@ -44,7 +44,7 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user-service/users/v1/logins, /user-service/users/v1/joins, /user-service/users/v1/owner/join, /user-service/managers/validate, /user-service/managers/status, /user-service/users/v1/validation/**, /user-service/api/v1/info/
+            - Path=/user-service/users/v1/logins, /user-service/users/v1/join, /user-service/users/v1/owner/join, /user-service/managers/validate, /user-service/managers/status, /user-service/users/v1/validation/**, /user-service/api/v1/info/
             - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
