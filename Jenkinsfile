@@ -11,6 +11,7 @@ pipeline {
             sh 'cd eureka-server && ls'
             sh '''sudo chmod 777 gradlew
 ./gradlew clean build --exclude-task test'''
+            sh 'ls'
           }
         }
 
@@ -19,6 +20,7 @@ pipeline {
             sh 'cd apigateway && ls'
             sh '''sudo chmod 777 gradlew
 ./gradlew clean build --exclude-task test'''
+            sh 'ls'
           }
         }
 
@@ -29,7 +31,7 @@ pipeline {
       parallel {
         stage('Discovery Docker Build') {
           steps {
-            sh 'ls'
+            sh 'cd eureka-server && ls'
             script {
               backend_user = docker.build("goalgoru/discovery-service")
             }
@@ -39,6 +41,7 @@ pipeline {
 
         stage('Gateway Docker Build') {
           steps {
+            sh 'cd apigateway && ls'
             script {
               backend_user = docker.build("goalgoru/gateway-service")
             }
