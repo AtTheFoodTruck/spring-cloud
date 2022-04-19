@@ -24,9 +24,9 @@ pipeline {
           }
         }
 
-        stage('') {
+        stage('error') {
           steps {
-            ws(dir: '/home') {
+            ws(dir: '/config-server') {
               sh 'ls'
             }
 
