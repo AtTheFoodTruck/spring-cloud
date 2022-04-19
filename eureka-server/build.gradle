@@ -22,7 +22,7 @@ dependencyManagement {
     }
 }
 
-tasks.bootJar {enabled = false}
+tasks.bootJar {enabled = true}
 tasks.jar {enabled = false}
 
 dependencies {
