@@ -33,6 +33,9 @@ pipeline {
           steps {
             sh 'cd eureka-server && ls'
             script {
+              sh'''
+cd eureka-server
+'''
               backend_user = docker.build("goalgoru/discovery-service")
             }
 
@@ -43,6 +46,9 @@ pipeline {
           steps {
             sh 'cd apigateway && ls'
             script {
+              sh'''
+cd eureka-server
+'''
               backend_user = docker.build("goalgoru/gateway-service")
             }
 
