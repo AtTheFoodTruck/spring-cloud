@@ -24,9 +24,9 @@ pipeline {
           }
         }
 
-        stage('error') {
+        stage('') {
           steps {
-            ws(dir: '/var/lib/jenkins/workspace/spring-cloud_main/config-server') {
+            ws(dir: '/home') {
               sh 'ls'
             }
 
@@ -41,20 +41,22 @@ pipeline {
         stage('Discovery Docker Build') {
           steps {
             sh 'cd eureka-server && ls'
-            script {
-              backend_user = docker.build("goalgoru/discovery-service")
+            dir ("./eureka-server"){
+              script {
+                backend_user = docker.build("goalgoru/discovery-service")
+              }
             }
-
           }
         }
 
         stage('Gateway Docker Build') {
           steps {
             sh 'cd apigateway && ls'
-            script {
-              backend_user = docker.build("goalgoru/gateway-service")
+            dir ("./apigateway"){
+              script {
+                backend_user = docker.build("goalgoru/gateway-service")
+              }
             }
-
           }
         }
 
