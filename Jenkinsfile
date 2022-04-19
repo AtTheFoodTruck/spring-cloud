@@ -27,7 +27,7 @@ pipeline {
       }
     }
 
-    stage('Discovery Docker Build') {
+    stage('Discovery, Gateway Docker Build') {
       parallel {
         stage('Discovery Docker Build') {
           steps {
@@ -52,7 +52,7 @@ pipeline {
       }
     }
 
-    stage('Discovery Docker Push') {
+    stage('Discovery, Gateway Docker Push') {
       parallel {
         stage('Discovery Docker Push') {
           steps {
