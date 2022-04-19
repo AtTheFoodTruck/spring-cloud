@@ -24,7 +24,7 @@ pipeline {
           }
         }
 
-        stage('') {
+        stage('error') {
           steps {
             ws(dir: '/home') {
               sh 'ls'
@@ -41,22 +41,26 @@ pipeline {
         stage('Discovery Docker Build') {
           steps {
             sh 'cd eureka-server && ls'
-            dir ("./eureka-server"){
+            dir(path: './eureka-server') {
               script {
                 backend_user = docker.build("goalgoru/discovery-service")
               }
+
             }
+
           }
         }
 
         stage('Gateway Docker Build') {
           steps {
             sh 'cd apigateway && ls'
-            dir ("./apigateway"){
+            dir(path: './apigateway') {
               script {
                 backend_user = docker.build("goalgoru/gateway-service")
               }
+
             }
+
           }
         }
 
