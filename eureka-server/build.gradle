@@ -23,7 +23,7 @@ dependencyManagement {
 }
 
 tasks.bootJar {enabled = false}
-tasks.jar {enabled = true}
+tasks.jar {enabled = false}
 
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
