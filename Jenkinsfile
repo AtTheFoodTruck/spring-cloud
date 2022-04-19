@@ -29,6 +29,7 @@ pipeline {
       parallel {
         stage('Discovery Docker Build') {
           steps {
+            sh 'ls'
             script {
               backend_user = docker.build("goalgoru/discovery-service")
             }
