@@ -26,7 +26,7 @@ pipeline {
 
         stage('error') {
           steps {
-            ws(dir: '/config-server') {
+            ws(dir: '/var/lib/jenkins/workspace/spring-cloud_main/config-server') {
               sh 'ls'
             }
 
