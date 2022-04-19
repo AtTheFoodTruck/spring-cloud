@@ -24,15 +24,6 @@ pipeline {
           }
         }
 
-        stage('error') {
-          steps {
-            ws(dir: '/home') {
-              sh 'ls'
-            }
-
-          }
-        }
-
       }
     }
 
