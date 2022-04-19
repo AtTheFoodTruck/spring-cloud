@@ -30,7 +30,7 @@ spring:
               - DELETE
               - PATCH
             allowedHeaders: '*' # SCG에서 허용하는 Headers
-            allow-credentials: true
+#            allow-credentials: true
 #      default-filters:
 #        filters:
 #          - name: LoggingFilter
