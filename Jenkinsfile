@@ -1,9 +1,23 @@
 pipeline {
   agent any
   stages {
-    stage('Build Gradle') {
-      steps {
-        sh 'ls'
+    stage('Discovery, Gateway') {
+      environment {
+        registryCredential = 'dockerhub_cred'
+      }
+      parallel {
+        stage('Build Gradle Discovery') {
+          steps {
+            sh 'ls && cd eureka-server'
+          }
+        }
+
+        stage('Build Gradle Gateway') {
+          steps {
+            sh 'ls && cd apigateway'
+          }
+        }
+
       }
     }
 
