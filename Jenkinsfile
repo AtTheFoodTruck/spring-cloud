@@ -34,7 +34,7 @@ pipeline {
             sh 'cd eureka-server && ls'
             dir(path: './eureka-server') {
               script {
-                backend_user = docker.build("goalgoru/discovery-service")
+                backend_discovery = docker.build("goalgoru/discovery-service")
               }
 
             }
@@ -47,7 +47,7 @@ pipeline {
             sh 'cd apigateway && ls'
             dir(path: './apigateway') {
               script {
-                backend_user = docker.build("goalgoru/gateway-service")
+                backend_gateway = docker.build("goalgoru/gateway-service")
               }
 
             }
@@ -64,8 +64,8 @@ pipeline {
           steps {
             script {
               docker.withRegistry('https://registry.hub.docker.com/', registryCredential) {
-                backend_user.push("latest")
-                backend_user.push("${BUILD_NUMBER}")
+                backend_discovery.push("latest")
+                backend_discovery.push("${BUILD_NUMBER}")
               }
             }
 
@@ -76,8 +76,8 @@ pipeline {
           steps {
             script {
               docker.withRegistry('https://registry.hub.docker.com/', registryCredential) {
-                backend_user.push("latest")
-                backend_user.push("${BUILD_NUMBER}")
+                backend_gateway.push("latest")
+                backend_gateway.push("${BUILD_NUMBER}")
               }
             }
 
