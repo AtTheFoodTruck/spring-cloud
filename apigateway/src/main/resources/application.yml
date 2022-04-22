@@ -9,7 +9,6 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
-#      defaultZone: http://10.10.10.16:8761/eureka
 
 # @author:jaemin - route, filter 설정
 spring:
@@ -92,6 +91,17 @@ spring:
           uri: lb://ITEM-SERVICE
           predicates:
             - Path=/item-service/items/v1/**
+            - Method=GET,PATCH,DELETE,POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/item-service/(?<segment>.*), /$\{segment}
+            - name: JwtAuthentication
+              args:
+                roles: ROLE_USER, ROLE_MANAGER
+        - id: item-service
+          uri: lb://ITEM-SERVICE
+          predicates:
+            - Path=/item-service/items/v1/customer/**
             - Method=GET,PATCH,DELETE,POST
           filters:
             - RemoveRequestHeader=Cookie
