@@ -64,6 +64,15 @@ spring:
               args:
                 roles: ROLE_USER, ROLE_MANAGER
         # User Service 끝
+        # main페이지 - 권한 X
+        - id: item-service
+          uri: lb://ITEM-SERVICE
+          predicates:
+            - Path=/item-service/items/v1/main
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/item-service/(?<segment>.*), /$\{segment}
         # Item Service 시작
         - id: item-service
           uri: lb://ITEM-SERVICE

@@ -36,7 +36,6 @@ public class JwtAuthenticationGatewayFilterFactory extends AbstractGatewayFilter
 
     public JwtAuthenticationGatewayFilterFactory() {
         super(Config.class);
-
     }
 
     /**
