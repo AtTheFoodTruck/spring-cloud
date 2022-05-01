@@ -64,16 +64,16 @@ spring:
               args:
                 roles: ROLE_USER, ROLE_MANAGER
         # User Service 끝
-        # main페이지 - 권한 X
+        # Item Service 시작
+        # main 페이지, 가게 정보 조회페이지 - 권한 X
         - id: item-service
           uri: lb://ITEM-SERVICE
           predicates:
-            - Path=/item-service/items/v1/main
+            - Path=/item-service/items/v1/main, /item-service/items/v1/customer/stores/**, /item-service/items/v1/search/**
             - Method=GET
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/item-service/(?<segment>.*), /$\{segment}
-        # Item Service 시작
         - id: item-service
           uri: lb://ITEM-SERVICE
           predicates:
@@ -85,33 +85,33 @@ spring:
             - name: JwtAuthentication
               args:
                 roles: ROLE_MANAGER
-        - id: item-service
-          uri: lb://ITEM-SERVICE
-          predicates:
-            - Path=/item-service/items/v1/stores/**, /item-service/items/v1/item/**, /item-service/items/v1/search/**
-            - Method=GET,PATCH,DELETE,POST
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/item-service/(?<segment>.*), /$\{segment}
-            - name: JwtAuthentication
-              args:
-                roles: ROLE_USER, ROLE_MANAGER
-        - id: item-service
-          uri: lb://ITEM-SERVICE
-          predicates:
-            - Path=/item-service/items/v1/**
-            - Method=GET,PATCH,DELETE,POST
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/item-service/(?<segment>.*), /$\{segment}
-            - name: JwtAuthentication
-              args:
-                roles: ROLE_USER, ROLE_MANAGER
+#        - id: item-service
+#          uri: lb://ITEM-SERVICE
+#          predicates:
+#            - Path=/item-service/items/v1/item/**
+#            - Method=GET,PATCH,DELETE,POST
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/item-service/(?<segment>.*), /$\{segment}
+#            - name: JwtAuthentication
+#              args:
+#                roles: ROLE_USER, ROLE_MANAGER
+#        - id: item-service
+#          uri: lb://ITEM-SERVICE
+#          predicates:
+#            - Path=/item-service/items/v1/**
+#            - Method=GET,PATCH,DELETE,POST
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/item-service/(?<segment>.*), /$\{segment}
+#            - name: JwtAuthentication
+#              args:
+#                roles: ROLE_USER, ROLE_MANAGER
         - id: item-service
           uri: lb://ITEM-SERVICE
           predicates:
             - Path=/item-service/items/v1/customer/**
-            - Method=GET,PATCH,DELETE,POST
+            - Method=PATCH,DELETE,POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/item-service/(?<segment>.*), /$\{segment}
