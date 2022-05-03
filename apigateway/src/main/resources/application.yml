@@ -69,8 +69,8 @@ spring:
         - id: item-service
           uri: lb://ITEM-SERVICE
           predicates:
-            - Path=/item-service/items/v1/main, /item-service/items/v1/customer/stores/**, /item-service/items/v1/search/**
-            - Method=GET
+            - Path=/item-service/items/v1/main, /item-service/items/v1/customer/stores/**, /item-service/items/v1/search/stores
+            - Method=GET, POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/item-service/(?<segment>.*), /$\{segment}
