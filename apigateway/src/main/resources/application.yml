@@ -77,7 +77,7 @@ spring:
         - id: item-service
           uri: lb://ITEM-SERVICE
           predicates:
-            - Path=/item-service/items/v1/owner/**
+            - Path=/item-service/items/v1/owner/**, /items/v1/validation/name
             - Method=GET,PATCH,DELETE,POST
           filters:
             - RemoveRequestHeader=Cookie
