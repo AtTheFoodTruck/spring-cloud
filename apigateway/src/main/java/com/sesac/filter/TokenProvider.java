@@ -36,13 +36,6 @@ public class TokenProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    /**
-     * token 의 모든 claim 반환
-     * @param token: jwt token
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/27
-     **/
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -51,13 +44,6 @@ public class TokenProvider implements InitializingBean {
                 .getBody();
     }
 
-    /**
-     * token 으로부터 username, role map 반환
-     * @param token: jwt access token
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/27
-     **/
     public Map<String, Object> getUserParseInfo(String token) {
         Claims claims = getAllClaimsFromToken(token);
         Map<String, Object> result = new HashMap<>();
@@ -69,14 +55,6 @@ public class TokenProvider implements InitializingBean {
         return result;
     }
 
-    /**
-     * Jwt token 유효성 여부
-     * @author jjaen
-     * @modifier jaemin, validation 메서드 수정
-     * @version 1.0.0
-     * 작성일 2022/03/27
-     * 수정일 2022/03/28
-     **/
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -93,12 +71,6 @@ public class TokenProvider implements InitializingBean {
         return false;
     }
 
-    /**
-     * 토큰 유효성, 만료시간 체크
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022-03-31
-     **/
     public boolean validateExpiration(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);

@@ -2,15 +2,12 @@ server:
   port: 8000
 
 eureka:
-#  instance:
-#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
 
-# @author:jaemin - route, filter 설정
 spring:
   application:
     name: apigateway-service
@@ -20,9 +17,8 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-#            allowedOrigins: "http://localhost:3000" # SCG를 호출하는 web Client 주
-            allowedOrigins: "https://foodtruck.blacksloop.com" # SCG를 호출하는 web Client 주
-            allowedMethods: # SCG에서 허용하는 methods
+            allowedOrigins:
+            allowedMethods:
               - GET
               - POST
               - DELETE
@@ -30,18 +26,8 @@ spring:
               - OPTIONS
               - DELETE
               - PATCH
-            allowedHeaders: '*' # SCG에서 허용하는 Headers
-#            allow-credentials: true
-#      default-filters:
-#        filters:
-#          - name: LoggingFilter
-#            args:
-#              baseMessage: Start Logging Filter.
-#              preLogger: true
-#              postLogger: true
+            allowedHeaders: '*'
       routes:
-        # User Service 시작
-        # 로그인, 회원가입, 중복체크
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
@@ -50,8 +36,6 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        # user-service의 모든 요청 filter처리
-        # 회원정보, 로그아웃
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
@@ -63,9 +47,6 @@ spring:
             - name: JwtAuthentication
               args:
                 roles: ROLE_USER, ROLE_MANAGER
-        # User Service 끝
-        # Item Service 시작
-        # main 페이지, 가게 정보 조회페이지 - 권한 X
         - id: item-service
           uri: lb://ITEM-SERVICE
           predicates:
@@ -85,28 +66,6 @@ spring:
             - name: JwtAuthentication
               args:
                 roles: ROLE_MANAGER
-#        - id: item-service
-#          uri: lb://ITEM-SERVICE
-#          predicates:
-#            - Path=/item-service/items/v1/item/**
-#            - Method=GET,PATCH,DELETE,POST
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/item-service/(?<segment>.*), /$\{segment}
-#            - name: JwtAuthentication
-#              args:
-#                roles: ROLE_USER, ROLE_MANAGER
-#        - id: item-service
-#          uri: lb://ITEM-SERVICE
-#          predicates:
-#            - Path=/item-service/items/v1/**
-#            - Method=GET,PATCH,DELETE,POST
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/item-service/(?<segment>.*), /$\{segment}
-#            - name: JwtAuthentication
-#              args:
-#                roles: ROLE_USER, ROLE_MANAGER
         - id: item-service
           uri: lb://ITEM-SERVICE
           predicates:
@@ -118,7 +77,6 @@ spring:
             - name: JwtAuthentication
               args:
                 roles: ROLE_USER, ROLE_MANAGER
-        # Order Service 시작
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
@@ -130,34 +88,6 @@ spring:
             - name: JwtAuthentication
               args:
                 roles: ROLE_USER, ROLE_MANAGER
-#        - id: user-service
-#          uri: lb://USER-SERVICE
-#          predicates:
-#            - Path=/swagger-ui/, /v2/api-docs, /configuration/**, /swagger*/**, /webjars/**
-#            - Method=GET
-#          filters:
-#            - RemoveRequestHeader=Cookie
-##            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        # config 서비스
-#        - id: user-service
-#          uri: lb://USER-SERVICE
-#          predicates:
-#            - Path=/user-service/actuator/**
-#            - Method=GET,POST
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-#        # config 서비스
-#        - id: user-service
-#          uri: lb://USER-SERVICE
-#          predicates:
-#            - Path=/user-service/health_check
-#            - Method=GET
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-
-# gw process 추적
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
@@ -165,7 +95,6 @@ logging:
 
 jwt:
   secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
-
 
 management:
   endpoints:

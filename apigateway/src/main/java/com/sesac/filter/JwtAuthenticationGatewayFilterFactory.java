@@ -38,48 +38,31 @@ public class JwtAuthenticationGatewayFilterFactory extends AbstractGatewayFilter
         super(Config.class);
     }
 
-    /**
-     * Jwt token 인증 filter
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/27
-     **/
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             log.info("into apply method");
             ServerHttpRequest request = exchange.getRequest();
 
-            // request header 에 Authorization 가 없는 경우
             if (!containsAuthorization(request)) {
                 return onError(exchange, "No Authorization header", HttpStatus.BAD_REQUEST);
             }
 
-            // 토큰 value 추출
-            String token = extractToken(request);  // "Bearer " 이후 String
+            String token = extractToken(request);
             log.info("JWT token: " + token);
 
-            // JWT token 이 유효한지 확인
             if (!tokenProvider.validateToken(token)) {
                 return onError(exchange, "Invalid Authorization header", HttpStatus.UNAUTHORIZED);
             }
 
-            // 해당 request 가 허용된 권한이 JWT token 의 user role 을 포함하고 있는지 확인
             if (! hasRole(config, token)) {
                 return onError(exchange, "Invalid role", HttpStatus.UNAUTHORIZED);
             }
 
-            // jwt token 인증 성공
             return chain.filter(exchange);
         };
     }
 
-    /**
-     * response 에 error status 추가
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/27
-    **/
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(httpStatus);
@@ -88,45 +71,16 @@ public class JwtAuthenticationGatewayFilterFactory extends AbstractGatewayFilter
         return response.setComplete();
     }
 
-    /**
-     * header 안 Authentication 포함 여부
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/27
-    **/
     private boolean containsAuthorization(ServerHttpRequest request) {
         return request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION);
     }
 
-    /**
-     * header 의 Authentication 에서 token 추출
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/27
-     **/
     private String extractToken(ServerHttpRequest request) {
         return request.getHeaders().getOrEmpty(HttpHeaders.AUTHORIZATION).get(0).substring(7);
     }
 
-    /**
-     * role 체크
-     * - filter 로 들어온 request 에 필요한 role 을 유저가 갖고 있는지
-     * @param configs: 해당 request 에 필요한 role
-     * @param token: jwt access token
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/27
-    **/
     private boolean hasRole(Config configs, String token) {
-        log.info("hasRole token: " + token);
-//        ArrayList<String> authorities = (ArrayList<String>) tokenProvider.getUserParseInfo(token).get("role");
-//        log.info("role of request user: " + authorities);
-//        if (! authorities.contains(config.getRoles())) {
-//            return false;
-//        }
-//        return true;
-        String role = (String) tokenProvider.getUserParseInfo(token).get("auth"); // ROLE_USer, ROLE_MANAGER, ROLE_ADMIN
-        log.info("role of request user: " + role);
+        String role = (String) tokenProvider.getUserParseInfo(token).get("auth"); 
 
         if(!configs.getRoles().stream()
                 .anyMatch(s -> s.equals(role))){
