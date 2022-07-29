@@ -11,6 +11,14 @@ eureka:
 spring:
   application:
     name: apigateway-service
+
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
+
   cloud:
     gateway:
       # cors 설정
@@ -88,6 +96,13 @@ spring:
             - name: JwtAuthentication
               args:
                 roles: ROLE_USER, ROLE_MANAGER
+        - id: notification-service
+          uri: lb://NOTIFICATION-SERVICE
+          predicates:
+            - Path=/notification-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/notification-service/(?<segment>.*), /$\{segment}
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
