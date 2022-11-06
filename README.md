@@ -59,6 +59,8 @@ FoodTruckAroundMe - 푸드트럭 통합 정보 제공 및 주문 서비스
 
 ### 시스템 아키텍처
 
+<img width="640" alt="image" src="https://user-images.githubusercontent.com/75469281/200155594-7f4e8f22-1d34-4bb2-ba16-35058729d013.png">
+
 <table>
     <tr>
         <td align="center">
