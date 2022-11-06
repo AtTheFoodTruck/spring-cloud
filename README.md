@@ -40,6 +40,7 @@ FoodTruckAroundMe - 푸드트럭 통합 정보 제공 및 주문 서비스
 </table>
 
 ### API 설계 ✏️
+[API 살계 문서](https://foodtruckaroundme.gitbook.io/api-reference/)
 
 ## 아키텍처
 | 기술스택 | 개발환경 |
