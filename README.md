@@ -65,10 +65,10 @@ FoodTruckAroundMe - 푸드트럭 통합 정보 제공 및 주문 서비스
 <table>
     <tr>
         <td align="center">
-            <img width="2395" alt="CI:CD 파이프라인" src="https://user-images.githubusercontent.com/44490394/168752428-fbaab2e3-fd3e-4aa4-a0ae-b4b0ba967feb.png" width="500" height="500">
+            <img width="2395" alt="CI:CD 파이프라인" src="https://user-images.githubusercontent.com/44490394/168752428-fbaab2e3-fd3e-4aa4-a0ae-b4b0ba967feb.png" width="500" height="400">
         </td>
         <td align="center">
-            <img width="1815" alt="MicroService" src="https://user-images.githubusercontent.com/44490394/168751288-1953e812-95bf-4258-8970-abee24b3e2c2.png" width="500" height="500">
+            <img width="1815" alt="MicroService" src="https://user-images.githubusercontent.com/44490394/168751288-1953e812-95bf-4258-8970-abee24b3e2c2.png" width="500" height="400">
         </td>
     </tr>
 </table>
