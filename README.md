@@ -41,6 +41,7 @@ FoodTruckAroundMe - 푸드트럭 통합 정보 제공 및 주문 서비스
 
 ### API 설계 ✏️
 - [API 설계 문서](https://foodtruckaroundme.gitbook.io/api-reference/)
+
   <img width="600" alt="image" src="https://user-images.githubusercontent.com/75469281/200163181-87d26159-e99e-4c74-86a4-6ee3267ddbed.png">
 
 
