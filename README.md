@@ -40,11 +40,11 @@ FoodTruckAroundMe - 푸드트럭 통합 정보 제공 및 주문 서비스
 </table>
 
 ### API 설계 ✏️
-[API 설계 문서](https://foodtruckaroundme.gitbook.io/api-reference/)
+- [API 설계 문서](https://foodtruckaroundme.gitbook.io/api-reference/)
 
 
 ### 화면 설계
-[Foodtruck-Around-Me 화면 설계](https://www.figma.com/file/R7BhsmOI26C98biXxJw0oA/Foodtruck-Around-Me?node-id=0%3A1)
+- [Foodtruck-Around-Me 화면 설계](https://www.figma.com/file/R7BhsmOI26C98biXxJw0oA/Foodtruck-Around-Me?node-id=0%3A1)
 
 ## 아키텍처
 | 기술스택 | 개발환경 |
