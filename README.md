@@ -46,6 +46,9 @@ FoodTruckAroundMe - 푸드트럭 통합 정보 제공 및 주문 서비스
 ### 화면 설계
 - [Foodtruck-Around-Me 화면 설계](https://www.figma.com/file/R7BhsmOI26C98biXxJw0oA/Foodtruck-Around-Me?node-id=0%3A1)
 
+<img width="800" alt="image" src="https://user-images.githubusercontent.com/75469281/200163068-80d9198a-6380-4aa1-bd10-cdc5e54e31dc.png">
+
+
 ## 아키텍처
 | 기술스택 | 개발환경 |
 | --- | --- |
